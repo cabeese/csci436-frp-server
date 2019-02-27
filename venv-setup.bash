@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ##
 ## Set up 'nodeenv' without sudo permissions (e.g. for the school lab machines)
 ##
@@ -22,5 +24,5 @@ rm -rf $PY_VENV
 echo ""
 echo ""
 echo "All done! To use Node, run:"
-echo -e "\tsource $NODE_VENV"
+echo -e "\tsource $NODE_VENV/bin/activate"
 echo ""
