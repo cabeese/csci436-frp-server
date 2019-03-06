@@ -25,7 +25,7 @@ module.exports = {
     },
 
     contactPhone: {
-      type: "number",
+      type: "string",
       description: "A phone number someone can call with questions about the donation.",
     },
 

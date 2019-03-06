@@ -5,6 +5,8 @@
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
 
+const isPositive = val => typeof(val) === "number" && val >= 0;
+
 module.exports = {
 
   attributes: {
@@ -22,12 +24,14 @@ module.exports = {
     initialQty: {
       type: "number",
       required: true,
+      custom: isPositive,
       description: "The amount of this item available initially"
     },
 
     remainingQty: {
       type: "number",
       required: true,
+      custom: isPositive,
       description: "The amount of this item still available (based on how much has been claimed)"
     },
 
@@ -49,6 +53,7 @@ module.exports = {
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
     parent: {
+      required: true,
       model: "donation"
     }
 
