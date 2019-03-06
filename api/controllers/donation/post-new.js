@@ -62,8 +62,9 @@ module.exports = {
     }
 
     // Update the 'claimed' status of the new donation
-    let claimed = sails.helpers.donationIsClaimed(savedItems);
-    await Donation.updateOne({id: id}).set({claimed: claimed});
+    await sails.helpers.updateIsClaimed(id);
+    //let claimed = sails.helpers.donationIsClaimed(savedItems);
+    //await Donation.updateOne({id: id}).set({claimed: claimed});
 
     // All done.
     return;

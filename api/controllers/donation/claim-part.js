@@ -78,8 +78,7 @@ module.exports = {
     // TODO: round to the nearest... what, 0.25, maybe? To avoid floating point issues later
 
     /* Update the original item to "claimed" if need be */
-    // let claimed = sails.helpers.donationIsClaimed(savedItems);
-    // await Donation.updateOne({id: id}).set({claimed: claimed});
+    await sails.helpers.updateIsClaimed(donationID);
 
     // All done.
     return;
