@@ -78,5 +78,7 @@ module.exports.sockets = {
 
   // grant3rdPartyCookie: true,
 
+  onlyAllowOrigins: [],
+
 
 };
