@@ -17,6 +17,9 @@ module.exports.policies = {
   'account/logout': true,
   'view-homepage-or-redirect': true,
   'deliver-contact-form-message': true,
-  'donation/': true, /* Temporary, until we do session authentication */
+
+  donationController: {
+    "*": true,
+  },
 
 };
