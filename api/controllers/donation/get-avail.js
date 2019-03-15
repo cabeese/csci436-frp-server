@@ -1,11 +1,6 @@
 module.exports = {
-
-
   friendlyName: 'Get available donations',
-
-
   description: 'Get all donations that haven\'t yet been claimed',
-
 
   inputs: {
     limit: {
@@ -18,11 +13,7 @@ module.exports = {
     }
   },
 
-
-  exits: {
-
-  },
-
+  exits: {},
 
   fn: async function (inputs) {
     let {limit, includeItems} = inputs;
@@ -35,6 +26,4 @@ module.exports = {
 
     return donations;
   }
-
-
 };

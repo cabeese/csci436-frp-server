@@ -1,20 +1,24 @@
 module.exports = {
-
-
   friendlyName: 'Post new',
-
-
-  description: '',
-
+  description: 'Create a new donation in the database.',
 
   inputs: {
-    donation: {
+    location: {
+      type: "string",
+      required: true,
+      description: "Where the donation is. (Address? GPS Coords?)",
+    },
+    contactPhone: {
+      type: "string",
+      required: true,
+      description: "A phone number someone can call with questions about the donation.",
+    },
+    items: {
       type: "json",
       required: true,
       description: "A new donation object. Will be validated, right?"
     }
   },
-
 
   exits: {
     noItems: {
@@ -25,18 +29,21 @@ module.exports = {
     }
   },
 
+  fn: async function (inputs) {
+    let {location, contactPhone, items} = inputs;
+    let donation = {
+      /* TODO: get user's ID and put it here */
+      location,
+      contactPhone,
+      claimed: false,
+    };
 
-  fn: async function (inputs, exits) {
-    let {donation} = inputs;
-    let {items} = donation;
-    donation.items = [];
-
-    // Complain if the 'items' array is empty
+    // Complain if the 'items' parameter is not an array or is empty
+    if(!Array.isArray(items)){
+      throw { "invalidItems": "The 'items' field must be an array" }
+    }
     if(items.length === 0){
-      return exits.noItems({
-        error: true,
-        message: "The 'items' field was empty - please include items to donate!",
-      });
+      throw { "noItems": "The 'items' field was empty - please include items to donate!" }
     }
 
     // First, save the parent Donation object
@@ -48,28 +55,16 @@ module.exports = {
     });
 
     // Save all the donation items
-    let savedItems;
     try {
-      savedItems = await Donation_Item.createEach(items).fetch();
+      await Donation_Item.createEach(items).fetch();
     } catch(e){
       // Shoot - one of the items was invalid. Destroy this record and complain to user
       let {details} = e;
       await Donation.destroy({id: id}).fetch();
-      return exits.invalidItems({
-        error: true,
-        message: details,
-      });
+      throw { "invalidItems": details }
     }
 
     // Update the 'claimed' status of the new donation
     await sails.helpers.updateIsClaimed(id);
-    //let claimed = sails.helpers.donationIsClaimed(savedItems);
-    //await Donation.updateOne({id: id}).set({claimed: claimed});
-
-    // All done.
-    return;
-
   }
-
-
 };
