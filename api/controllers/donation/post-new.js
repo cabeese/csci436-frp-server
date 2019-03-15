@@ -33,10 +33,7 @@ module.exports = {
 
     // Complain if the 'items' array is empty
     if(items.length === 0){
-      return exits.noItems({
-        error: true,
-        message: "The 'items' field was empty - please include items to donate!",
-      });
+      throw { "noItems": "The 'items' field was empty - please include items to donate!" }
     }
 
     // First, save the parent Donation object
@@ -48,23 +45,17 @@ module.exports = {
     });
 
     // Save all the donation items
-    let savedItems;
     try {
-      savedItems = await Donation_Item.createEach(items).fetch();
+      await Donation_Item.createEach(items).fetch();
     } catch(e){
       // Shoot - one of the items was invalid. Destroy this record and complain to user
       let {details} = e;
       await Donation.destroy({id: id}).fetch();
-      return exits.invalidItems({
-        error: true,
-        message: details,
-      });
+      throw { "invalidItems": details }
     }
 
     // Update the 'claimed' status of the new donation
     await sails.helpers.updateIsClaimed(id);
-    //let claimed = sails.helpers.donationIsClaimed(savedItems);
-    //await Donation.updateOne({id: id}).set({claimed: claimed});
 
     // All done.
     return;
