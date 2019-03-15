@@ -65,4 +65,9 @@ module.exports.routes = {
   'POST  /api/v1/donation/claim-part':                   { action: 'donation/claim-part' },
   'GET   /api/v1/donation/get-avail':                    { action: 'donation/get-avail' },
 
+  /* Same API but not secured against CSRF - will need to do something better later */
+  'POST  /mob/v1/donation/post-new':                     { action: 'donation/post-new', csrf: false },
+  'POST  /mob/v1/donation/claim-part':                   { action: 'donation/claim-part', csrf: false },
+  'GET   /mob/v1/donation/get-avail':                    { action: 'donation/get-avail', csrf: false },
+
 };
