@@ -1,11 +1,6 @@
 module.exports = {
-
-
   friendlyName: 'Post new',
-
-
-  description: '',
-
+  description: 'Create a new donation in the database.',
 
   inputs: {
     location: {
@@ -25,7 +20,6 @@ module.exports = {
     }
   },
 
-
   exits: {
     noItems: {
       statusCode: 400,
@@ -35,10 +29,10 @@ module.exports = {
     }
   },
 
-
   fn: async function (inputs) {
     let {location, contactPhone, items} = inputs;
     let donation = {
+      /* TODO: get user's ID and put it here */
       location,
       contactPhone,
       claimed: false,
@@ -72,11 +66,5 @@ module.exports = {
 
     // Update the 'claimed' status of the new donation
     await sails.helpers.updateIsClaimed(id);
-
-    // All done.
-    return;
-
   }
-
-
 };

@@ -1,11 +1,6 @@
 module.exports = {
-
-
   friendlyName: 'Claim part of a donation',
-
-
-  description: '',
-
+  description: 'Selectively claim portions of one or more items in an existing donation',
 
   inputs: {
     donationID: {
@@ -25,7 +20,6 @@ module.exports = {
     },
   },
 
-
   exits: {
     noSuchItem: {
       statusCode: 404,
@@ -40,14 +34,6 @@ module.exports = {
       description: "Quantity must be > 0",
     }
   },
-
-  // TODO: create a helper to throw error messages like this:
-/*
-    return exits.notfound({
-    error: true,
-    message: 'The *thing* could not be found in the database.'
-  });
- */
 
  fn: async function (inputs) {
     let {donationID, foodName, qty} = inputs;
@@ -79,11 +65,5 @@ module.exports = {
 
     /* Update the original item to "claimed" if need be */
     await sails.helpers.updateIsClaimed(donationID);
-
-    // All done.
-    return;
-
   }
-
-
 };
