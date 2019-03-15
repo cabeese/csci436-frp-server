@@ -8,7 +8,17 @@ module.exports = {
 
 
   inputs: {
-    donation: {
+    location: {
+      type: "string",
+      required: true,
+      description: "Where the donation is. (Address? GPS Coords?)",
+    },
+    contactPhone: {
+      type: "string",
+      required: true,
+      description: "A phone number someone can call with questions about the donation.",
+    },
+    items: {
       type: "json",
       required: true,
       description: "A new donation object. Will be validated, right?"
@@ -26,12 +36,18 @@ module.exports = {
   },
 
 
-  fn: async function (inputs, exits) {
-    let {donation} = inputs;
-    let {items} = donation;
-    donation.items = [];
+  fn: async function (inputs) {
+    let {location, contactPhone, items} = inputs;
+    let donation = {
+      location,
+      contactPhone,
+      claimed: false,
+    };
 
-    // Complain if the 'items' array is empty
+    // Complain if the 'items' parameter is not an array or is empty
+    if(!Array.isArray(items)){
+      throw { "invalidItems": "The 'items' field must be an array" }
+    }
     if(items.length === 0){
       throw { "noItems": "The 'items' field was empty - please include items to donate!" }
     }
