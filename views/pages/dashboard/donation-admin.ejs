@@ -28,5 +28,28 @@
     </tbody>
   </table>
 
+  <h1>Users</h1>
+
+  <table class="pure-table">
+    <thead>
+      <tr>
+        <td>Full Name</td>
+        <td>Email Address</td>
+        <td>Notes</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(function(user) { %>
+        <tr>
+          <td><%= user.fullName %> [<strong><%= user.id %></strong>]</td>
+          <td><%= user.emailAddress %></td>
+          <td>
+            <% if (user.isSuperAdmin) { %> Super Admin <% } %>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+
 </div>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

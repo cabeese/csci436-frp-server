@@ -17,10 +17,12 @@ module.exports = {
 
  fn: async function () {
     donations = await Donation.find({}).populate("items");
+    users = await User.find({});
 
     // Respond with view.
     return {
-      donations
+      donations,
+      users,
     };
 
   }
