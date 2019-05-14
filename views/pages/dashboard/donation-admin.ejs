@@ -1,0 +1,32 @@
+<div id="donation-admin" v-cloak>
+
+  <h1>Donations</h1>
+
+  <p>There is/are <%= donations.length %> donation(s).</p>
+
+  <table class="pure-table">
+    <thead>
+      <tr>
+        <td>Location</td>
+        <td>Items</td>
+        <td>OwnerID</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% donations.forEach(function(donation) { %>
+        <tr>
+          <td><%= donation.location %></td>
+          <td>
+            <% donation.items.forEach(function(item) { %>
+              <b><%= item.foodName %>: </b>
+              <%= item.remainingQty %> / <%= item.initialQty %> <%= item.qtyUnits %> left
+            <% }); %>
+          </td>
+          <td><%= donation.owner %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
